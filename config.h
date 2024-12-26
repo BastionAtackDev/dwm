@@ -21,11 +21,12 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_orange[]      = "#f77402";
 static const char col_purple[]      = "#420420";
+static const char col_purple_dark[] = "#320110";
 static const char col_green[]       = "#37ff37";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_green, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_green, col_purple,  col_purple  },
+	[SchemeSel]  = { col_green, col_purple,  col_purple_dark },
 };
 
 /* tagging */
@@ -36,9 +37,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Librewolf", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "Alacritty",NULL,    NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -69,7 +72,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_purple, "-sf", col_green, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browser[]  = { "firefox", NULL };
+static const char *browser[]  = { "librewolf", NULL };
 
 static const char *upbrightness[]   = { "xbacklight", "-inc", "10", NULL };
 static const char *downbrightness[] = { "xbacklight", "-dec", "10", NULL };
