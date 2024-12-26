@@ -40,7 +40,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Librewolf", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "Alacritty",NULL,    NULL,           0,         0,          1,           0,        -1 },
+	{ "kitty",     NULL,    NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -71,7 +71,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_purple, "-sf", col_green, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 static const char *browser[]  = { "librewolf", NULL };
 
 static const char *upbrightness[]   = { "xbacklight", "-inc", "10", NULL };
