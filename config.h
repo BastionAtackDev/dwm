@@ -23,6 +23,7 @@ static const char col_orange[]      = "#f77402";
 static const char col_purple[]      = "#420420";
 static const char col_purple_dark[] = "#320110";
 static const char col_green[]       = "#37ff37";
+static const char col_rd[]       = "#ff0000";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_green, col_gray1, col_gray2 },
@@ -73,9 +74,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_purple, "-sf", col_green, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *browser[]  = { "librewolf", NULL };
+static const char *find_cursor[]  = { "xfce4-find-cursor", NULL };
 
 static const char *upbrightness[]   = { "xbacklight", "-inc", "10", NULL };
 static const char *downbrightness[] = { "xbacklight", "-dec", "10", NULL };
+
+static const char *lgrom[] = { "setxkbmap", "ro", "std", NULL };
+static const char *lgus[] = { "setxkbmap", "us", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -84,8 +89,11 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
     { MODKEY,                       XK_Up,     spawn,          {.v = upbrightness }},
     { MODKEY,                       XK_Down,   spawn,          {.v = downbrightness }},
+    { MODKEY,                       XK_w,      spawn,          {.v = find_cursor }},
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      { 0 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_r,      spawn,          { .v = lgrom } },
+	{ MODKEY,                       XK_e,      spawn,          { .v = lgus  } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
