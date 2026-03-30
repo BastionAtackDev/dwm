@@ -40,7 +40,7 @@ static const Rule rules[] = {
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Librewolf", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "kitty",     NULL,    NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,      NULL,     "python", 0,         0,          0,           1,        -1 }, /* xev */
@@ -74,7 +74,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_purple, "-sf", col_green, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *browser[]  = { "librewolf", NULL };
+static const char *termfm[]  = { "vifm", "~", NULL };
+static const char *browser[]  = { "firefox", NULL };
 static const char *find_cursor[]  = { "xfce4-find-cursor", NULL };
 
 static const char *upbrightness[]   = { "xbacklight", "-inc", "10", NULL };
@@ -83,10 +84,15 @@ static const char *downbrightness[] = { "xbacklight", "-dec", "10", NULL };
 static const char *lgrom[] = { "setxkbmap", "ro", "std", NULL };
 static const char *lgus[] = { "setxkbmap", "us", NULL };
 
+static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+10%",   NULL };
+static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-10%",   NULL };
+static const char *mute_vol[] = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,                       XK_e,      spawn,          {.v = termfm} },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
     { MODKEY,                       XK_Up,     spawn,          {.v = upbrightness }},
     { MODKEY,                       XK_Down,   spawn,          {.v = downbrightness }},
@@ -114,7 +120,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 5  } },
+	{ 0, XF86XK_AudioMute,        spawn, {.v = mute_vol } },
+    { 0, XF86XK_AudioLowerVolume, spawn, {.v = down_vol } },
+    { 0, XF86XK_AudioRaiseVolume, spawn, {.v = up_vol } },
+    TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
