@@ -42,6 +42,7 @@ static const Rule rules[] = {
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "kitty",     NULL,    NULL,           0,         0,          1,           0,        -1 },
+	{ NULL, NULL, "Qalculate!",          0,         1,          0,           0,         -1},
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,      NULL,     "python", 0,         0,          0,           1,        -1 }, /* xev */
 };
@@ -74,9 +75,11 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_purple, "-sf", col_green, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *termfm[]  = { "vifm", "~", NULL };
+static const char *termfm[]  = { "kitty", "-e", "/bin/vifm", NULL };
 static const char *browser[]  = { "firefox", NULL };
 static const char *find_cursor[]  = { "xfce4-find-cursor", NULL };
+static const char *qalculat[]  = { "qalculate-gtk", NULL };
+
 
 static const char *upbrightness[]   = { "xbacklight", "-inc", "10", NULL };
 static const char *downbrightness[] = { "xbacklight", "-dec", "10", NULL };
@@ -92,11 +95,12 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,                       XK_e,      spawn,          {.v = termfm} },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = termfm} },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
     { MODKEY,                       XK_Up,     spawn,          {.v = upbrightness }},
     { MODKEY,                       XK_Down,   spawn,          {.v = downbrightness }},
     { MODKEY,                       XK_w,      spawn,          {.v = find_cursor }},
+    { MODKEY,                       XK_q,      spawn,          {.v = qalculat}},
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      { 0 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_r,      spawn,          { .v = lgrom } },
